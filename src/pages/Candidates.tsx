@@ -5,51 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Filter } from "lucide-react";
 
-// Mock data - à remplacer par les appels API
-const mockCandidates = [
-  {
-    id: 1,
-    firstName: "Marie",
-    lastName: "Dubois",
-    email: "marie.dubois@email.com",
-    phone: "+33 6 12 34 56 78",
-    status: "interview" as const,
-    skills: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-    appliedDate: "2024-01-15",
-    position: "Développeur Full-Stack Senior",
-  },
-  {
-    id: 2,
-    firstName: "Thomas",
-    lastName: "Martin",
-    email: "thomas.martin@email.com",
-    status: "screening" as const,
-    skills: ["Product Strategy", "Agile", "Roadmapping"],
-    appliedDate: "2024-01-18",
-    position: "Product Manager",
-  },
-  {
-    id: 3,
-    firstName: "Sophie",
-    lastName: "Bernard",
-    email: "sophie.bernard@email.com",
-    phone: "+33 6 98 76 54 32",
-    status: "offer" as const,
-    skills: ["Figma", "User Research", "Prototyping", "Design Systems"],
-    appliedDate: "2024-01-10",
-    position: "UX/UI Designer",
-  },
-  {
-    id: 4,
-    firstName: "Lucas",
-    lastName: "Petit",
-    email: "lucas.petit@email.com",
-    status: "new" as const,
-    skills: ["Python", "Machine Learning", "TensorFlow", "SQL"],
-    appliedDate: "2024-01-20",
-    position: "Data Scientist",
-  },
-];
+const mockCandidates: any[] = [];
 
 const Candidates = () => {
   const [searchQuery, setSearchQuery] = useState("");

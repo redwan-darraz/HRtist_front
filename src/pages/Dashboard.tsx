@@ -1,37 +1,7 @@
 import { PositionCard } from "@/components/PositionCard";
 import { Briefcase } from "lucide-react";
 
-// Mock data - à remplacer par les appels API
-const mockPositions = [
-  {
-    id: 1,
-    title: "Développeur Full-Stack Senior",
-    department: "Engineering",
-    candidateCount: 24,
-    activeCount: 8,
-  },
-  {
-    id: 2,
-    title: "Product Manager",
-    department: "Product",
-    candidateCount: 15,
-    activeCount: 5,
-  },
-  {
-    id: 3,
-    title: "UX/UI Designer",
-    department: "Design",
-    candidateCount: 18,
-    activeCount: 6,
-  },
-  {
-    id: 4,
-    title: "Data Scientist",
-    department: "Data",
-    candidateCount: 12,
-    activeCount: 4,
-  },
-];
+const mockPositions: any[] = [];
 
 const Dashboard = () => {
   return (
