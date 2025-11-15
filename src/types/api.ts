@@ -30,3 +30,12 @@ export interface Interview {
   type?: string;
   commentaires?: string;
 }
+
+export interface Recruiter {
+  id?: number;
+  nom: string;
+  prenom?: string;
+  email: string;
+  telephone?: string;
+  entreprise?: string;
+}
