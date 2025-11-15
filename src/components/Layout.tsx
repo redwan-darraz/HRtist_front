@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Users, Briefcase } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import logoHrtist from "@/assets/logo-hrtist.png";
 
 const Layout = () => {
   return (
@@ -9,11 +10,12 @@ const Layout = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-card/80 backdrop-blur-xl shadow-elegant supports-[backdrop-filter]:bg-card/70">
         <div className="container flex h-20 items-center justify-between px-6">
           <div className="flex items-center gap-12">
-            <div className="flex items-center gap-3 font-display text-2xl font-semibold tracking-tight">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-glow">
-                <Briefcase className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">HRtist</span>
+            <div className="flex items-center">
+              <img 
+                src={logoHrtist} 
+                alt="HRtist - Your HR assistant" 
+                className="h-12 w-auto dark:brightness-110 dark:contrast-90"
+              />
             </div>
             
             <nav className="flex gap-8">
