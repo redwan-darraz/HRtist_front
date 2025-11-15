@@ -1,7 +1,7 @@
 import type { Candidate } from "@/types/api";
 
 // URL de base de votre API FastAPI
-const API_BASE_URL = "http://localhost:8000"; // Modifiez selon votre configuration
+const API_BASE_URL = "https://unconfining-inexpensive-sharri.ngrok-free.dev"; // Modifiez selon votre configuration
 
 class CandidateApiService {
   private baseUrl: string;
