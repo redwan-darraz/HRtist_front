@@ -2,7 +2,7 @@ import type { Candidate } from "@/types/api";
 
 // URL de base de votre API FastAPI via ngrok
 // Modifiez cette URL avec votre URL ngrok (ex: https://xxxx-xx-xx-xx-xx.ngrok-free.app)
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "https://unconfining-inexpensive-sharri.ngrok-free.dev/";
 
 class CandidateApiService {
   private baseUrl: string;
@@ -16,11 +16,11 @@ class CandidateApiService {
    */
   async getCandidatesForProcess(processId: number): Promise<Candidate[]> {
     const response = await fetch(`${this.baseUrl}/processes/${processId}/candidates`);
-    
+
     if (!response.ok) {
       throw new Error(`Erreur lors de la récupération des candidats: ${response.statusText}`);
     }
-    
+
     return response.json();
   }
 
@@ -29,14 +29,14 @@ class CandidateApiService {
    */
   async searchCandidatesByName(name: string): Promise<Candidate[]> {
     const response = await fetch(`${this.baseUrl}/candidates/search/${encodeURIComponent(name)}`);
-    
+
     if (!response.ok) {
       if (response.status === 404) {
         return [];
       }
       throw new Error(`Erreur lors de la recherche: ${response.statusText}`);
     }
-    
+
     return response.json();
   }
 
@@ -45,14 +45,14 @@ class CandidateApiService {
    */
   async getCandidateById(candidateId: number): Promise<Candidate> {
     const response = await fetch(`${this.baseUrl}/candidates/${candidateId}`);
-    
+
     if (!response.ok) {
       if (response.status === 404) {
         throw new Error("Candidat non trouvé");
       }
       throw new Error(`Erreur lors de la récupération du candidat: ${response.statusText}`);
     }
-    
+
     return response.json();
   }
 
@@ -61,17 +61,17 @@ class CandidateApiService {
    */
   async createCandidate(candidate: Candidate): Promise<Candidate> {
     const response = await fetch(`${this.baseUrl}/candidates`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(candidate),
     });
-    
+
     if (!response.ok) {
       throw new Error(`Erreur lors de la création du candidat: ${response.statusText}`);
     }
-    
+
     return response.json();
   }
 }
