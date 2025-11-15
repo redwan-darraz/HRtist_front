@@ -12,9 +12,15 @@ export interface Candidate {
 
 export interface Process {
   id: number;
-  titre: string;
-  description?: string;
-  statut?: string;
+  name_process: string;
+  job_description?: string;
+  candidates?: Candidate[];
+}
+
+export interface ProcessCreate {
+  name_process: string;
+  job_description?: string;
+  candidate_ids?: number[];
 }
 
 export interface Interview {
