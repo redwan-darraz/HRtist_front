@@ -1,7 +1,8 @@
 import type { Candidate } from "@/types/api";
 
-// URL de base de votre API FastAPI
-const API_BASE_URL = "http://localhost:8000"; // Modifiez selon votre configuration
+// URL de base de votre API FastAPI via ngrok
+// Modifiez cette URL avec votre URL ngrok (ex: https://xxxx-xx-xx-xx-xx.ngrok-free.app)
+const API_BASE_URL = "http://localhost:8000";
 
 class CandidateApiService {
   private baseUrl: string;
@@ -69,40 +70,6 @@ class CandidateApiService {
     
     if (!response.ok) {
       throw new Error(`Erreur lors de la création du candidat: ${response.statusText}`);
-    }
-    
-    return response.json();
-  }
-
-  /**
-   * Recherche des candidats par email
-   */
-  async searchCandidatesByEmail(email: string): Promise<Candidate[]> {
-    // Si vous ajoutez cet endpoint à votre API FastAPI
-    const response = await fetch(`${this.baseUrl}/candidates/search/email/${encodeURIComponent(email)}`);
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        return [];
-      }
-      throw new Error(`Erreur lors de la recherche: ${response.statusText}`);
-    }
-    
-    return response.json();
-  }
-
-  /**
-   * Recherche des candidats par poste
-   */
-  async searchCandidatesByPoste(poste: string): Promise<Candidate[]> {
-    // Si vous ajoutez cet endpoint à votre API FastAPI
-    const response = await fetch(`${this.baseUrl}/candidates/search/poste/${encodeURIComponent(poste)}`);
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        return [];
-      }
-      throw new Error(`Erreur lors de la recherche: ${response.statusText}`);
     }
     
     return response.json();
