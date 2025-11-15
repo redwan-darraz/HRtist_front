@@ -11,7 +11,7 @@ const Layout = () => {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2 font-semibold text-xl">
               <Briefcase className="h-6 w-6 text-primary" />
-              <span>RecrutPro</span>
+              <span>HRtist</span>
             </div>
             
             <nav className="flex gap-6">
