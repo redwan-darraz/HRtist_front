@@ -16,7 +16,8 @@ class CandidateApiService {
   async getCandidatesForProcess(processId: number): Promise<Candidate[]> {
     const response = await fetch(`${this.baseUrl}/processes/${processId}/candidates`, {
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        'ngrok-skip-browser-warning': '69420',
+        'User-Agent': 'CustomClient',
       },
     });
 
@@ -33,7 +34,8 @@ class CandidateApiService {
   async searchCandidatesByName(name: string): Promise<Candidate[]> {
     const response = await fetch(`${this.baseUrl}/candidates/search/${encodeURIComponent(name)}`, {
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        'ngrok-skip-browser-warning': '69420',
+        'User-Agent': 'CustomClient',
       },
     });
 
@@ -53,7 +55,8 @@ class CandidateApiService {
   async getCandidateById(candidateId: number): Promise<Candidate> {
     const response = await fetch(`${this.baseUrl}/candidates/${candidateId}`, {
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        'ngrok-skip-browser-warning': '69420',
+        'User-Agent': 'CustomClient',
       },
     });
 
@@ -75,7 +78,8 @@ class CandidateApiService {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
+        "ngrok-skip-browser-warning": "69420",
+        "User-Agent": "CustomClient",
       },
       body: JSON.stringify(candidate),
     });
