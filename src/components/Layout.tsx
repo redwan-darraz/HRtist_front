@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { Users, Briefcase } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -10,18 +10,17 @@ const Layout = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-card/80 backdrop-blur-xl shadow-elegant supports-[backdrop-filter]:bg-card/70">
         <div className="container flex h-20 items-center justify-between px-6">
           <div className="flex items-center gap-12">
-            <div className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img 
                 src={logoHrtist} 
                 alt="HRtist - Your HR assistant" 
-                className="h-12 w-auto dark:brightness-110 dark:contrast-90"
+                className="h-12 w-auto dark:brightness-110 dark:contrast-90 transition-opacity hover:opacity-80"
               />
-            </div>
+            </Link>
             
             <nav className="flex gap-8">
               <NavLink
-                to="/"
-                end
+                to="/postes"
                 className="text-sm font-medium transition-all duration-200 hover:text-primary px-3 py-2 rounded-lg hover:bg-accent/50"
                 activeClassName="text-primary bg-accent"
               >
