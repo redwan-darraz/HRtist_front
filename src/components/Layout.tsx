@@ -2,9 +2,14 @@ import { Outlet, Link } from "react-router-dom";
 import { Users, Briefcase } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logoHrtist from "@/assets/logo-hrtist.png";
+import { useTheme } from "next-themes";
+import logoHrtistDark from "@/assets/logo-hrtist-dark.png";
+import logoHrtistLight from "@/assets/logo-hrtist-light.png";
 
 const Layout = () => {
+  const { resolvedTheme } = useTheme();
+  const logo = resolvedTheme === "dark" ? logoHrtistLight : logoHrtistDark;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 w-full border-b bg-card/80 backdrop-blur-xl shadow-elegant supports-[backdrop-filter]:bg-card/70">
@@ -12,9 +17,9 @@ const Layout = () => {
           <div className="flex items-center gap-12">
             <Link to="/" className="flex items-center">
               <img 
-                src={logoHrtist} 
+                src={logo} 
                 alt="HRtist - Your HR assistant" 
-                className="h-12 w-auto dark:brightness-110 dark:contrast-90 transition-opacity hover:opacity-80"
+                className="h-12 w-auto transition-opacity hover:opacity-80"
               />
             </Link>
             
