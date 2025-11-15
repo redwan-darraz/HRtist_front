@@ -18,46 +18,21 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
-// Mock data - à remplacer par les appels API
 const mockCandidate = {
   id: 1,
-  firstName: "Marie",
-  lastName: "Dubois",
-  email: "marie.dubois@email.com",
-  phone: "+33 6 12 34 56 78",
-  status: "interview" as const,
-  skills: ["React", "TypeScript", "Node.js", "PostgreSQL", "Docker", "AWS"],
-  appliedDate: "2024-01-15",
-  position: "Développeur Full-Stack Senior",
-  location: "Paris, France",
-  experience: "7 ans",
-  education: "Master Informatique - Université Paris Diderot",
-  interviews: [
-    {
-      id: 1,
-      date: "2024-01-20",
-      interviewer: "Jean Dupont",
-      type: "Technique",
-      feedback: "Excellente maîtrise des concepts React et TypeScript. Bonnes pratiques de code.",
-      rating: 4,
-    },
-    {
-      id: 2,
-      date: "2024-01-22",
-      interviewer: "Sophie Martin",
-      type: "Culture fit",
-      feedback: "Très bonne communication, s'intègre bien à l'équipe.",
-      rating: 5,
-    },
-  ],
-  notes: [
-    {
-      id: 1,
-      author: "RH Team",
-      date: "2024-01-16",
-      content: "CV très complet, profil intéressant pour le poste.",
-    },
-  ],
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  status: "new" as const,
+  skills: [],
+  appliedDate: "",
+  position: "",
+  location: "",
+  experience: "",
+  education: "",
+  interviews: [],
+  notes: [],
 };
 
 const CandidateDetail = () => {

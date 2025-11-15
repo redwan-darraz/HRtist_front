@@ -5,34 +5,11 @@ import { SearchBar } from "@/components/SearchBar";
 import { ArrowLeft, Briefcase } from "lucide-react";
 import { useState } from "react";
 
-// Mock data - à remplacer par les appels API
 const mockPosition = {
   id: 1,
-  title: "Développeur Full-Stack Senior",
-  department: "Engineering",
-  candidates: [
-    {
-      id: 1,
-      firstName: "Marie",
-      lastName: "Dubois",
-      email: "marie.dubois@email.com",
-      phone: "+33 6 12 34 56 78",
-      status: "interview" as const,
-      skills: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-      appliedDate: "2024-01-15",
-      position: "Développeur Full-Stack Senior",
-    },
-    {
-      id: 5,
-      firstName: "Paul",
-      lastName: "Leroy",
-      email: "paul.leroy@email.com",
-      status: "screening" as const,
-      skills: ["Vue.js", "Python", "Django", "MongoDB"],
-      appliedDate: "2024-01-17",
-      position: "Développeur Full-Stack Senior",
-    },
-  ],
+  title: "Poste sans candidats",
+  department: "Aucun",
+  candidates: [],
 };
 
 const PositionDetail = () => {
