@@ -1,43 +1,56 @@
 import type { Process, ProcessCreate } from "@/types/api";
-
-// URL de base de votre API FastAPI
-const API_BASE_URL = "https://unconfining-inexpensive-sharri.ngrok-free.dev"; // Modifiez selon votre configuration
+import { supabase } from '@/integrations/supabase/client';
 
 class ProcessApiService {
-  private baseUrl: string;
-
-  constructor(baseUrl: string = API_BASE_URL) {
-    this.baseUrl = baseUrl;
-  }
-
   /**
    * Récupère tous les processus
    */
   async getAllProcesses(): Promise<Process[]> {
-    const response = await fetch(`${this.baseUrl}/processes`);
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la récupération des processus: ${response.statusText}`);
+    const { data, error } = await supabase
+      .from('processes')
+      .select('*');
+
+    if (error) {
+      throw new Error(`Erreur lors de la récupération des processus: ${error.message}`);
     }
-    return response.json();
+
+    return data || [];
   }
 
   /**
    * Crée un nouveau processus
    */
   async createProcess(processData: ProcessCreate): Promise<Process> {
-    const response = await fetch(`${this.baseUrl}/processes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(processData),
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la création du processus: ${response.statusText}`);
+    const { name_process, job_description, candidate_ids } = processData;
+
+    // Create the process
+    const { data: process, error: processError } = await supabase
+      .from('processes')
+      .insert({ name_process, job_description })
+      .select()
+      .single();
+
+    if (processError) {
+      throw new Error(`Erreur lors de la création du processus: ${processError.message}`);
     }
-    
-    return response.json();
+
+    // Link candidates if provided
+    if (candidate_ids && candidate_ids.length > 0 && process) {
+      const links = candidate_ids.map(candidateId => ({
+        process_id: process.id,
+        candidate_id: candidateId
+      }));
+
+      const { error: linkError } = await supabase
+        .from('candidate_processes')
+        .insert(links);
+
+      if (linkError) {
+        console.error('Error linking candidates:', linkError);
+      }
+    }
+
+    return process;
   }
 }
 

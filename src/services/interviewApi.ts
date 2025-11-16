@@ -1,46 +1,59 @@
 import type { Interview } from '@/types/api';
-
-// URL de base de votre API FastAPI
-const API_BASE_URL = "https://unconfining-inexpensive-sharri.ngrok-free.dev"; // Modifiez selon votre configuration
+import { supabase } from '@/integrations/supabase/client';
 
 class InterviewApiService {
-  private baseUrl: string;
-
-  constructor(baseUrl: string = API_BASE_URL) {
-    this.baseUrl = baseUrl;
-  }
-
   /**
-   * Récupère les candidats pour un processus spécifique
+   * Récupère les interviews pour un processus spécifique
    */
   async getInterviewForProcess(processId: number): Promise<Interview[]> {
-    const response = await fetch(`${this.baseUrl}/processes/${processId}/candidates`);
-    
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la récupération des candidats: ${response.statusText}`);
-    }
-    
-    return response.json();
-  }
+    // Get candidates for this process
+    const { data: links, error: linksError } = await supabase
+      .from('candidate_processes')
+      .select('candidate_id')
+      .eq('process_id', processId);
 
+    if (linksError) {
+      throw new Error(`Erreur lors de la récupération des candidats: ${linksError.message}`);
+    }
+
+    if (!links || links.length === 0) {
+      return [];
+    }
+
+    const candidateIds = links.map(link => link.candidate_id);
+
+    // Get interviews for these candidates
+    const { data: interviews, error: interviewsError } = await supabase
+      .from('interviews')
+      .select('*')
+      .in('candidate_id', candidateIds);
+
+    if (interviewsError) {
+      throw new Error(`Erreur lors de la récupération des interviews: ${interviewsError.message}`);
+    }
+
+    return interviews || [];
+  }
 
   /**
    * Crée un nouvel interview
    */
   async createInterview(interview: Interview): Promise<Interview> {
-    const response = await fetch(`${this.baseUrl}/interviews`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(interview),
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la création de l'interview: ${response.statusText}`);
+    const { data, error } = await supabase
+      .from('interviews')
+      .insert(interview)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Erreur lors de la création de l'interview: ${error.message}`);
     }
-    
-    return response.json();
+
+    if (!data) {
+      throw new Error('Failed to create interview');
+    }
+
+    return data;
   }
 }
 
