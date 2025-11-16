@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CandidateCard } from "@/components/CandidateCard";
+import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +20,7 @@ const Candidates = () => {
   // Test inputs
   const [processId, setProcessId] = useState("");
   const [searchName, setSearchName] = useState("");
-  const [candidateId, setCandidateId] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [newCandidate, setNewCandidate] = useState({
     nom: "",
     prenom: "",
@@ -86,11 +87,11 @@ const Candidates = () => {
     }
   };
 
-  const handleGetById = async () => {
-    if (!candidateId) {
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
       toast({
         title: "Erreur",
-        description: "Veuillez entrer un ID de candidat",
+        description: "Veuillez entrer un terme de recherche",
         variant: "destructive"
       });
       return;
@@ -98,18 +99,19 @@ const Candidates = () => {
 
     setLoading(true);
     try {
-      const data = await candidateApi.getCandidateById(Number(candidateId));
-      setCandidates([data]);
+      const data = await candidateApi.searchCandidatesByName(searchQuery);
+      setCandidates(data);
       toast({
         title: "Succès",
-        description: `Candidat ${data.nom} ${data.prenom} trouvé`
+        description: `${data.length} candidat(s) trouvé(s)`
       });
     } catch (error) {
       toast({
         title: "Erreur",
-        description: error instanceof Error ? error.message : "Erreur lors de la récupération",
+        description: error instanceof Error ? error.message : "Erreur lors de la recherche",
         variant: "destructive"
       });
+      setCandidates([]);
     } finally {
       setLoading(false);
     }
@@ -228,29 +230,27 @@ const Candidates = () => {
           </CardContent>
         </Card>
 
-        {/* Test 3: Get by ID */}
+        {/* Test 3: Search candidates */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TestTube2 className="h-5 w-5" />
-              Candidat par ID
+              Rechercher des candidats
             </CardTitle>
-            <CardDescription>GET /candidates/{"{candidate_id}"}</CardDescription>
+            <CardDescription>GET /candidates/search/{"{name}"}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="candidateId">ID du candidat</Label>
-              <Input
-                id="candidateId"
-                type="number"
-                placeholder="Ex: 1"
-                value={candidateId}
-                onChange={(e) => setCandidateId(e.target.value)}
+              <Label htmlFor="searchQuery">Recherche textuelle</Label>
+              <SearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Rechercher un candidat par nom..."
               />
             </div>
-            <Button onClick={handleGetById} disabled={loading} className="w-full">
+            <Button onClick={handleSearch} disabled={loading} className="w-full">
               {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-              Tester
+              Rechercher
             </Button>
           </CardContent>
         </Card>
