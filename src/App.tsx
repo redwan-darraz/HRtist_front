@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Candidates from "./pages/Candidates";
 import CandidateDetail from "./pages/CandidateDetail";
 import PositionDetail from "./pages/PositionDetail";
+import RejectionEmail from "./pages/RejectionEmail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/candidates" element={<Candidates />} />
             <Route path="/candidate/:id" element={<CandidateDetail />} />
             <Route path="/position/:id" element={<PositionDetail />} />
+            <Route path="/rejection-email" element={<RejectionEmail />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
