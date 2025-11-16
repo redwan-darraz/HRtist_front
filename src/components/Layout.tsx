@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import { Users, Briefcase } from "lucide-react";
+import { Users, Briefcase, Mail } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "next-themes";
@@ -42,6 +42,16 @@ const Layout = () => {
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4" />
                   <span>Candidats</span>
+                </div>
+              </NavLink>
+              <NavLink
+                to="/rejection-email"
+                className="text-sm font-medium transition-all duration-200 hover:text-primary px-3 py-2 rounded-lg hover:bg-accent/50"
+                activeClassName="text-primary bg-accent"
+              >
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  <span>Mails de refus</span>
                 </div>
               </NavLink>
             </nav>

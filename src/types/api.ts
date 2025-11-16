@@ -39,3 +39,15 @@ export interface Recruiter {
   telephone?: string;
   entreprise?: string;
 }
+
+export interface RejectionEmailRequest {
+  candidate_full_name: string;
+  decision: "accepted" | "rejected";
+  recruiter_name?: string;
+  process_name?: string;
+}
+
+export interface RejectionEmailResponse {
+  subject: string;
+  body: string;
+}
