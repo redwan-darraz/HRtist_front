@@ -14,8 +14,6 @@ import { Search, Mail, Copy, Loader2, User, Phone } from "lucide-react";
 const RejectionEmail = () => {
   const { toast } = useToast();
 
-  const [recruiterName, setRecruiterName] = useState("");
-  const [processName, setProcessName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [generatedEmail, setGeneratedEmail] = useState<RejectionEmailResponse | null>(null);
@@ -63,8 +61,6 @@ const RejectionEmail = () => {
       const result = await feedbackApi.generateRejectionEmail({
         candidate_full_name: `${candidate.prenom || ""} ${candidate.nom}`.trim(),
         decision: "rejected",
-        recruiter_name: recruiterName || undefined,
-        process_name: processName || undefined,
       });
 
       setGeneratedEmail(result);
@@ -112,35 +108,6 @@ const RejectionEmail = () => {
           Recherchez un candidat et générez un email de refus personnalisé
         </p>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Informations du recruteur</CardTitle>
-          <CardDescription>Ces informations seront utilisées dans le template d'email</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="recruiterName">Nom du recruteur</Label>
-              <Input
-                id="recruiterName"
-                placeholder="Ex: Marie Dupont"
-                value={recruiterName}
-                onChange={(e) => setRecruiterName(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="processName">Nom du poste (optionnel)</Label>
-              <Input
-                id="processName"
-                placeholder="Ex: Développeur Full Stack"
-                value={processName}
-                onChange={(e) => setProcessName(e.target.value)}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       <Card>
         <CardHeader>
