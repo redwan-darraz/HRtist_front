@@ -1,78 +1,77 @@
 import type { Candidate } from "@/types/api";
-
-const API_BASE_URL = "https://unconfining-inexpensive-sharri.ngrok-free.dev";
+import { supabase } from '@/integrations/supabase/client';
 
 class CandidateApiService {
-  private baseUrl: string;
-
-  constructor(baseUrl: string = API_BASE_URL) {
-    this.baseUrl = baseUrl;
-  }
-
-  private get defaultHeaders() {
-    return {
-      "ngrok-skip-browser-warning": "69420",
-      // Pas de User-Agent !
-    };
-  }
-
   async getCandidatesForProcess(processId: number): Promise<Candidate[]> {
-    const response = await fetch(`${this.baseUrl}/processes/${processId}/candidates`, {
-      headers: this.defaultHeaders,
-    });
+    const { data: links, error: linksError } = await supabase
+      .from('candidate_processes')
+      .select('candidate_id')
+      .eq('process_id', processId);
 
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la récupération des candidats: ${response.status} ${response.statusText}`);
+    if (linksError) {
+      throw new Error(`Erreur lors de la récupération des candidats: ${linksError.message}`);
     }
 
-    return response.json();
+    if (!links || links.length === 0) {
+      return [];
+    }
+
+    const candidateIds = links.map(link => link.candidate_id);
+
+    const { data: candidates, error: candidatesError } = await supabase
+      .from('candidates')
+      .select('*')
+      .in('id', candidateIds);
+
+    if (candidatesError) {
+      throw new Error(`Erreur lors de la récupération des candidats: ${candidatesError.message}`);
+    }
+
+    return candidates || [];
   }
 
   async searchCandidatesByName(name: string): Promise<Candidate[]> {
-    const response = await fetch(`${this.baseUrl}/candidates/search/${encodeURIComponent(name)}`, {
-      headers: this.defaultHeaders,
-    });
+    const { data, error } = await supabase
+      .from('candidates')
+      .select('*')
+      .ilike('nom', `%${name}%`);
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        return [];
-      }
-      throw new Error(`Erreur lors de la recherche: ${response.status} ${response.statusText}`);
+    if (error) {
+      throw new Error(`Erreur lors de la recherche: ${error.message}`);
     }
 
-    return response.json();
+    return data || [];
   }
 
   async getCandidateById(candidateId: number): Promise<Candidate> {
-    const response = await fetch(`${this.baseUrl}/candidates/${candidateId}`, {
-      headers: this.defaultHeaders,
-    });
+    const { data, error } = await supabase
+      .from('candidates')
+      .select('*')
+      .eq('id', candidateId)
+      .single();
 
-    if (!response.ok) {
-      if (response.status === 404) {
+    if (error) {
+      if (error.code === 'PGRST116') {
         throw new Error("Candidat non trouvé");
       }
-      throw new Error(`Erreur lors de la récupération du candidat: ${response.status} ${response.statusText}`);
+      throw new Error(`Erreur lors de la récupération du candidat: ${error.message}`);
     }
 
-    return response.json();
+    return data;
   }
 
   async createCandidate(candidate: Candidate): Promise<Candidate> {
-    const response = await fetch(`${this.baseUrl}/candidates`, {
-      method: "POST",
-      headers: {
-        ...this.defaultHeaders,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(candidate),
-    });
+    const { data, error } = await supabase
+      .from('candidates')
+      .insert(candidate)
+      .select()
+      .single();
 
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la création du candidat: ${response.status} ${response.statusText}`);
+    if (error) {
+      throw new Error(`Erreur lors de la création du candidat: ${error.message}`);
     }
 
-    return response.json();
+    return data;
   }
 }
 

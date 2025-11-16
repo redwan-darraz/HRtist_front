@@ -14,7 +14,170 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      candidate_processes: {
+        Row: {
+          candidate_id: number
+          created_at: string | null
+          process_id: number
+        }
+        Insert: {
+          candidate_id: number
+          created_at?: string | null
+          process_id: number
+        }
+        Update: {
+          candidate_id?: number
+          created_at?: string | null
+          process_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_processes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_processes_process_id_fkey"
+            columns: ["process_id"]
+            isOneToOne: false
+            referencedRelation: "processes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidates: {
+        Row: {
+          business_attention_point: string | null
+          business_strengths: string | null
+          competences: string[] | null
+          created_at: string | null
+          date_candidature: string | null
+          description: string | null
+          email: string
+          experiences: string[] | null
+          fit_attention_point: string | null
+          fit_strengths: string | null
+          formations: string[] | null
+          id: number
+          nom: string
+          numero: string | null
+          poste: string | null
+          prenom: string | null
+          skills: string[] | null
+          statut: string | null
+          technical_attention_point: string | null
+          technical_strengths: string | null
+          telephone: string | null
+        }
+        Insert: {
+          business_attention_point?: string | null
+          business_strengths?: string | null
+          competences?: string[] | null
+          created_at?: string | null
+          date_candidature?: string | null
+          description?: string | null
+          email: string
+          experiences?: string[] | null
+          fit_attention_point?: string | null
+          fit_strengths?: string | null
+          formations?: string[] | null
+          id?: number
+          nom: string
+          numero?: string | null
+          poste?: string | null
+          prenom?: string | null
+          skills?: string[] | null
+          statut?: string | null
+          technical_attention_point?: string | null
+          technical_strengths?: string | null
+          telephone?: string | null
+        }
+        Update: {
+          business_attention_point?: string | null
+          business_strengths?: string | null
+          competences?: string[] | null
+          created_at?: string | null
+          date_candidature?: string | null
+          description?: string | null
+          email?: string
+          experiences?: string[] | null
+          fit_attention_point?: string | null
+          fit_strengths?: string | null
+          formations?: string[] | null
+          id?: number
+          nom?: string
+          numero?: string | null
+          poste?: string | null
+          prenom?: string | null
+          skills?: string[] | null
+          statut?: string | null
+          technical_attention_point?: string | null
+          technical_strengths?: string | null
+          telephone?: string | null
+        }
+        Relationships: []
+      }
+      interviews: {
+        Row: {
+          candidate_id: number
+          commentaires: string | null
+          created_at: string | null
+          date: string
+          id: number
+          recruiter_name: string | null
+          type: string | null
+        }
+        Insert: {
+          candidate_id: number
+          commentaires?: string | null
+          created_at?: string | null
+          date?: string
+          id?: number
+          recruiter_name?: string | null
+          type?: string | null
+        }
+        Update: {
+          candidate_id?: number
+          commentaires?: string | null
+          created_at?: string | null
+          date?: string
+          id?: number
+          recruiter_name?: string | null
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      processes: {
+        Row: {
+          created_at: string | null
+          id: number
+          job_description: string | null
+          name_process: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          job_description?: string | null
+          name_process: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          job_description?: string | null
+          name_process?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
